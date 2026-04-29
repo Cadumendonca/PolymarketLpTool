@@ -20,14 +20,11 @@
 > **Donations**: If you'd like to support the project, donations are welcome! 
 > **Polygon USDC/MATIC**: `0xf6C7F0C6cDdE13033fF9fC05798B00891f7Ee059`
 
-This Python program provides **Price Monitoring and Automated Adjustment** for your manual orders on Polymarket.
-*   **Manual Entry**: You place orders via the [Polymarket UI](https://polymarket.com/).
-*   **Automated Management**: The bot monitors open orders and adjusts prices based on the **Orderbook + Incentive Band (δ)**.
+This Python program provides **Automated Market Making and Liquidity Provision** for your orders on Polymarket.
+*   **Automated Strategy**: The bot automatically manages open orders and can initiate new positions based on your whitelist.
+*   **Dynamic Management**: It monitors orders and adjusts prices in real-time based on the **Orderbook + Incentive Band (δ)**.
 *   **Yield Hunter**: A new feature that scans all Polymarket markets to find the ones with the highest liquidity rewards and lowest spreads.
 *   **Safety First**: It decides between **Keep / Cancel / Re-post** to maximize liquidity rewards while minimizing risk.
-
-> [!NOTE]
-> This is **not** a market-making bot that creates orders from scratch. It only manages orders you have already placed.
 
 ---
 
@@ -127,14 +124,11 @@ This is an unofficial project by `@臭臭Panda`. Use at your own risk. Trading i
 > **Doações**: Se você deseja apoiar o projeto, doações são muito bem-vindas!
 > **Polygon USDC/MATIC**: `0xf6C7F0C6cDdE13033fF9fC05798B00891f7Ee059`
 
-Programa em Python para **Monitoramento e Ajuste Automatizado** de suas ordens manuais na Polymarket.
-*   **Entrada Manual**: Você coloca as ordens pela [Interface da Polymarket](https://polymarket.com/).
-*   **Gestão Automática**: O bot monitora as ordens abertas e ajusta os preços com base no **Orderbook + Banda de Incentivo (δ)**.
+Programa em Python para **Market Making Automatizado e Provisão de Liquidez** na Polymarket.
+*   **Estratégia Automatizada**: O bot gerencia ordens automaticamente e pode abrir novas posições com base na sua whitelist.
+*   **Gestão Dinâmica**: Monitora ordens e ajusta os preços em tempo real com base no **Orderbook + Banda de Incentivo (δ)**.
 *   **Yield Hunter**: Nova funcionalidade que varre todos os mercados da Polymarket para encontrar aqueles com maiores recompensas de liquidez e menores spreads.
 *   **Segurança**: Decide entre **Manter / Cancelar / Repostar** para maximizar recompensas de liquidez minimizando riscos.
-
-> [!NOTE]
-> Este **não** é um bot de market-making que cria ordens do zero. Ele gerencia apenas ordens que você já abriu.
 
 ---
 
