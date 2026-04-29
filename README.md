@@ -23,6 +23,7 @@
 This Python program provides **Price Monitoring and Automated Adjustment** for your manual orders on Polymarket.
 *   **Manual Entry**: You place orders via the [Polymarket UI](https://polymarket.com/).
 *   **Automated Management**: The bot monitors open orders and adjusts prices based on the **Orderbook + Incentive Band (δ)**.
+*   **Yield Hunter**: A new feature that scans all Polymarket markets to find the ones with the highest liquidity rewards and lowest spreads.
 *   **Safety First**: It decides between **Keep / Cancel / Re-post** to maximize liquidity rewards while minimizing risk.
 
 > [!NOTE]
@@ -74,6 +75,7 @@ Uses `distance_ratio = |price−mid|/δ`.
 | :--- | :--- |
 | `/status` | View real-time bot status and account summary |
 | `/orders` | List all open orders being managed |
+| `/scan` | Scan for markets with the highest rewards 🎯 |
 | `/pnl` | View current Profit and Loss (PnL) |
 | `/set_rule <id>` | Start interactive setup for a specific order |
 | `/get_rule <id>` | Show saved rule for a token+direction |
@@ -128,6 +130,7 @@ This is an unofficial project by `@臭臭Panda`. Use at your own risk. Trading i
 Programa em Python para **Monitoramento e Ajuste Automatizado** de suas ordens manuais na Polymarket.
 *   **Entrada Manual**: Você coloca as ordens pela [Interface da Polymarket](https://polymarket.com/).
 *   **Gestão Automática**: O bot monitora as ordens abertas e ajusta os preços com base no **Orderbook + Banda de Incentivo (δ)**.
+*   **Yield Hunter**: Nova funcionalidade que varre todos os mercados da Polymarket para encontrar aqueles com maiores recompensas de liquidez e menores spreads.
 *   **Segurança**: Decide entre **Manter / Cancelar / Repostar** para maximizar recompensas de liquidez minimizando riscos.
 
 > [!NOTE]
@@ -179,6 +182,7 @@ Usa `distance_ratio = |preço−mid|/δ`.
 | :--- | :--- |
 | `/status` | Ver status do bot e resumo da conta em tempo real |
 | `/orders` | Listar todas as ordens abertas monitoradas |
+| `/scan` | Escanear mercados com maiores recompensas 🎯 |
 | `/pnl` | Ver Lucros e Perdas (PnL) atual |
 | `/set_rule <id>` | Iniciar configuração interativa para uma ordem |
 | `/get_rule <id>` | Ver regra salva para um token+direção |

@@ -29,6 +29,10 @@ from passive_liquidity.telegram_live_queries import (
 from passive_liquidity.market_display import MarketDisplayResolver
 from passive_liquidity.telegram_notifier import TelegramNotifier
 from passive_liquidity.telegram_rule_setup import dispatch_command, handle_fsm_text
+from passive_liquidity.yield_hunter import (
+    format_yield_scan_msg,
+    get_top_reward_opportunities,
+)
 
 LOG = logging.getLogger(__name__)
 
@@ -238,11 +242,23 @@ def _poll_loop(
                             funder=funder,
                             account_label=notifier.account_label,
                         )
+                    elif cmd == "/scan":
+                        try:
+                            # O clob_host geralmente está acessível via reward_monitor._config.clob_host
+                            # ou podemos extrair do client se disponível.
+                            clob_host = reward_monitor._config.clob_host
+                            opps = get_top_reward_opportunities(clob_host)
+                            body = format_yield_scan_msg(opps, market_display)
+                            ok = True
+                        except Exception as e:
+                            LOG.exception("Erro ao executar /scan")
+                            ok, body = False, f"Falha ao escanear oportunidades: {e}"
                     elif cmd in ("/start", "/help"):
                         body = (
                             "Comandos disponíveis (consulta em tempo real):\n"
                             "/status — Visão geral da conta e ordens\n"
                             "/orders — Resumo das ordens abertas\n"
+                            "/scan   — Escanear mercados com maiores recompensas 🎯\n"
                             "/cancel <order_id|all> — Cancelar ordem específica ou todas\n"
                             "/pnl — Lucros e perdas\n"
                             "\nAjuste Personalizado (Regras salvas por token_id + direção):\n"
