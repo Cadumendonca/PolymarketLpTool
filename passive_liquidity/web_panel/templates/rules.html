@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+{% block title %}Regras Personalizadas{% endblock %}
+{% block body %}
+<p class="muted">Arquivo de persistência (compartilhado com o bot e Telegram): <code>{{ rules_path }}</code></p>
+<p class="muted">O bot prioriza as regras salvas aqui; elas são gravadas no mesmo JSON do comando <code>/set_rule</code> do Telegram. Se o bot e a web editarem o arquivo ao mesmo tempo, pode haver conflito; recomenda-se editar de apenas um lugar.</p>
+
+<div class="card">
+  <h2>Regras Existentes</h2>
+  {% if items|length == 0 %}
+  <p class="muted">Nenhuma regra salva no momento.</p>
+  {% else %}
+  <table class="orders">
+    <thead>
+      <tr>
+        <th>Chave</th>
+        <th>Regime</th>
+        <th>Grosso (N)</th>
+        <th>Grosso (Top)</th>
+        <th>Grosso (Mín)</th>
+        <th>Fino (Safe)</th>
+        <th>Fino (Target)</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for it in items %}
+      <tr>
+        <td><code>{{ it.key }}</code></td>
+        <td>{{ it.tick_regime }}</td>
+        <td>{{ it.coarse_tick_offset_from_mid }}</td>
+        <td>{{ 'Sim' if it.coarse_allow_top_of_book else 'Não' }}</td>
+        <td>{{ it.coarse_min_candidate_levels }}</td>
+        <td>{{ "%.2f ~ %.2f" % (it.fine_safe_band_min, it.fine_safe_band_max) }}</td>
+        <td>{{ "%.2f" % it.fine_target_band_ratio }}</td>
+        <td>
+          <form method="post" action="{{ url_for('rules_delete') }}">
+            <input type="hidden" name="token_id" value="{{ it.token_id }}">
+            <input type="hidden" name="side" value="{{ it.side }}">
+            <button type="submit" class="danger">Excluir</button>
+          </form>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% endif %}
+</div>
+
+<div class="card">
+  <h2>Adicionar / Sobrescrever Regra</h2>
+  <form method="post" action="{{ url_for('rules_add') }}">
+    <label for="token_id">token_id (ID do ativo outcome)</label>
+    <input type="text" id="token_id" name="token_id" required placeholder="Copie da lista de ordens ou do Gamma">
+    <label for="side">Lado</label>
+    <select id="side" name="side">
+      <option value="BUY">BUY</option>
+      <option value="SELL">SELL</option>
+    </select>
+    <label for="tick_regime">Modo de Tick</label>
+    <select id="tick_regime" name="tick_regime">
+      <option value="coarse">Coarse (Tick Grosso)</option>
+      <option value="fine">Fine (Tick Fino)</option>
+    </select>
+    <div class="rule-grid" style="margin-top:0.75rem">
+      <div>
+        <label>Grosso: Posição N na banda (1 = mais perto do mid)</label>
+        <input type="number" name="coarse_tick_offset_from_mid" value="1" min="1">
+      </div>
+      <div>
+        <label>Grosso: Permitir Top of Book</label>
+        <label style="display:flex;align-items:center;gap:0.4rem;margin-top:0.25rem">
+          <input type="checkbox" name="coarse_allow_top_of_book" checked> allow_top_of_book
+        </label>
+      </div>
+      <div>
+        <label>Grosso: Mínimo de níveis na banda (coarse_min_candidate_levels)</label>
+        <input type="number" name="coarse_min_candidate_levels" value="1" min="1">
+      </div>
+      <div>
+        <label>Fino: Safe Band Min</label>
+        <input type="number" step="0.01" name="fine_safe_band_min" value="0.4">
+      </div>
+      <div>
+        <label>Fino: Safe Band Max</label>
+        <input type="number" step="0.01" name="fine_safe_band_max" value="0.6">
+      </div>
+      <div>
+        <label>Fino: Target Band Ratio</label>
+        <input type="number" step="0.01" name="fine_target_band_ratio" value="0.5">
+      </div>
+    </div>
+    <p style="margin-top:1rem"><button type="submit">Salvar Regra</button></p>
+  </form>
+</div>
+{% endblock %}
